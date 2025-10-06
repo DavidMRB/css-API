@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App CSS</title>
+    <link rel="stylesheet" href="./assets/CSS/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Todo App</h1>
+
+        <div id="errorMessage" class="error-message">
+            <span id="errorText"></span>
+        </div>
+
+        <div id="successMessage" class="success-message">
+            <span id="successText"></span>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">🔍 Buscar Todo por ID</h2>
+            <div class="search-section">
+                <form id="searchForm" class="search-form">
+                    <div class="form-group">
+                        <label for="searchId">ID del Todo</label>
+                        <input 
+                            type="number" 
+                            id="searchId" 
+                            name="searchId"
+                            placeholder="Ingresa el ID a buscar"
+                            min="1"
+                            required
+                        >
+                    </div>
+                    <button type="submit" class="btn btn-search">Buscar</button>
+                </form>
+            </div>
+            
+            <div id="searchResult" class="hidden"></div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">➕ Crear nuevo todo</h2>
+            <form id="createForm">
+                <div class="form-group">
+                    <label for="title">Título *</label>
+                    <input 
+                        type="text" 
+                        id="title" 
+                        name="title"
+                        placeholder="Ej: Comprar víveres"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Descripción</label>
+                    <textarea 
+                        id="description" 
+                        name="description"
+                        rows="3"
+                        placeholder="Descripción detallada..."
+                    ></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="priority">Prioridad</label>
+                        <select id="priority" name="priority">
+                            <option value="1">Baja</option>
+                            <option value="2">Media</option>
+                            <option value="3">Alta</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dueAt">Fecha límite</label>
+                        <input type="datetime-local" id="dueAt" name="dueAt">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Crear Todo</button>
+            </form>
+        </div>
+
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Cargando todos...</p>
+        </div>
+
+        <div id="todoListContainer" class="card hidden">
+            <div class="card-header">
+                <h2 class="card-title">📋 Mis Todos (<span id="todoCount">0</span>)</h2>
+            </div>
+            <div id="todoList"></div>
+        </div>
+
+        <div id="emptyState" class="card empty-state hidden">
+            <p>No hay todos aún. ¡Crea uno nuevo!</p>
+        </div>
+    </div>
+
+    <div id="editModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>✏️ Editar Todo</h2>
+                <button onclick="closeEditModal()" class="btn-close">✕</button>
+            </div>
+
+            <form id="editForm" class="modal-body">
+                <input type="hidden" id="editId">
+                
+                <div class="form-group">
+                    <label for="editTitle">Título *</label>
+                    <input type="text" id="editTitle" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="editDescription">Descripción</label>
+                    <textarea id="editDescription" rows="3"></textarea>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="editCompleted">
+                    <label for="editCompleted">Marcar como completado</label>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editPriority">Prioridad</label>
+                        <select id="editPriority">
+                            <option value="1">Baja</option>
+                            <option value="2">Media</option>
+                            <option value="3">Alta</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editDueAt">Fecha límite</label>
+                        <input type="datetime-local" id="editDueAt" required>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    <button type="button" onclick="closeEditModal()" class="btn btn-secondary">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="viewModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>👁️ Detalle del Todo</h2>
+                <button onclick="closeViewModal()" class="btn-close">✕</button>
+            </div>
+
+            <div id="viewModalContent" class="modal-body">
+            </div>
+        </div>
+    </div>
+
+    <script src="./assets/js/app.js"></script>
+</body>
+</html>
