@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  css_api:
+    image: nginx:1.27-alpine
+    container_name: cssfront      # mismo que en build
+    volumes:
+      - .:/usr/share/nginx/html
+      - ./nginx.conf:/etc/nginx/conf.d/site.conf
+    ports:
+      - "8080:80"
+    restart: unless-stopped

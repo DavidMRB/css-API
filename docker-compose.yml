@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+  css_api:
+    build: .
+    container_name: cssfront
+    image: css-api:latest
+    ports:
+      - "8080:80"
+    restart: unless-stopped
